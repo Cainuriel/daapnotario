@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import React from "react";
 import { ethers } from "ethers";
-//import NFT_MERKLE from "./artifacts/contracts/NFT_MERKLE.sol/NFT_MERKLE.json";
+import Notario from "./artifacts/contracts/Notario.json";
 import Swal from "sweetalert2";
 
 const Solidity = () => {
@@ -12,7 +12,7 @@ const Solidity = () => {
   const [inputRoot, setInputRoot] = useState("");
   const [network, setNetwork] = useState("no-net");
   const [register, setRegister] = useState(null);
-  const nftContract = "0xaE4f5cb0F2dbAE7Bff53ca6B585f966EA8E6736F";
+  const nftContract = "0x9DD80a68E1332Bd0cA7302785093AF11C065Aa27"; // bsc testnet 25/10/22
   const BINANCENETWORK = "bnbt";
   const [doubleCheck, setDoubleChek] = useState(false);
 
