@@ -9,7 +9,7 @@ const Solidity = () => {
   const [accountNotarizer, setAccountNotarizer] = useState("");
   const [rootHook, setRootHook] = useState("");
   const [buyNFTOk, setBuyNFTOk] = useState(false);
-  const [hash, setHash] = useState("");
+  const [hashHook, setHashHook] = useState("");
   const [network, setNetwork] = useState("no-net");
   const [register, setRegister] = useState(null);
   const nftContract = "0x9DD80a68E1332Bd0cA7302785093AF11C065Aa27"; // bsc testnet 25/10/22
@@ -17,28 +17,10 @@ const Solidity = () => {
   const [doubleCheck, setDoubleChek] = useState(false);
 
   async function setDataToHash() {
-    if (!doubleCheck) {
-      setDoubleChek(true);
-      const provider = new ethers.providers.Web3Provider(window.ethereum);
-      const signer = provider.getSigner();
-      const contract = new ethers.Contract(nftContract, Notario.abi, signer);
-      //let bnbAmount = ethers.utils.parseEther(amount).toString();
-      try {
-        const hashFromBlockchain = await contract.creationHash(rootHook);
-        setHash(hashFromBlockchain);
-        setDoubleChek(false);
-      } catch (err) {
-        let mensajeError = err.message;
-        Swal.fire({
-          title: "Ooops!",
-          text: `${mensajeError}`,
-          icon: "error",
-          confirmButtonText: "Cerrar",
-        });
-        console.log("Error: ", err);
-        setDoubleChek(false);
-      }
-    }
+
+      const hashFromEthers = await ethers.utils.keccak256(ethers.utils.toUtf8Bytes("hello world"))
+        setHashHook(hashFromEthers);
+
   }
 
   async function setNotarizer() {
@@ -87,10 +69,10 @@ const Solidity = () => {
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner();
       const contract = new ethers.Contract(nftContract, Notario.abi, signer);
-      console.log("el hook hash ", hash);
+      console.log("el hook hash ", hashHook);
       try {
-        await contract.callStatic.notarizeWithoutSign(hash);
-        const tx = await contract.notarizeWithoutSign(hash);
+        await contract.callStatic.notarizeWithoutSign(hashHook);
+        const tx = await contract.notarizeWithoutSign(hashHook);
         Swal.fire({
           title: "Procesando el registro de su documento",
           text: "Espere, y no actualice la página",
@@ -202,7 +184,7 @@ const Solidity = () => {
                 </button>
                 <hr className="my-4" />
                 <input
-                  value={hash}
+                  value={hashHook}
                   readOnly
                   type="text"
                   className="form-control"
