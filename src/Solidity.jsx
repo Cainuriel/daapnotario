@@ -10,15 +10,13 @@ const Solidity = () => {
   const [rootHook, setRootHook] = useState("");
   const [buyNFTOk, setBuyNFTOk] = useState(false);
   const [hashHook, setHashHook] = useState("");
-  const [network, setNetwork] = useState("no-net");
-  const [register, setRegister] = useState(null);
   const nftContract = "0x9DD80a68E1332Bd0cA7302785093AF11C065Aa27"; // bsc testnet 25/10/22
   const BINANCENETWORK = "bnbt";
   const [doubleCheck, setDoubleChek] = useState(false);
 
   async function setDataToHash() {
     const hashFromEthers = await ethers.utils.keccak256(
-      ethers.utils.toUtf8Bytes("hello world")
+      ethers.utils.toUtf8Bytes(inputData)
     );
     setHashHook(hashFromEthers);
   }
