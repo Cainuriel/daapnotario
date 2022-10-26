@@ -84,20 +84,22 @@ const Intro = () => {
             </p>
             <p className="col-lg-10 fs-4 text-white">
               Ante la legislación vigente en España, año 2022, no podemos
-              registrar datos personales ante la exigencia normativa de su
-              posible borrado a petición del cliente.
+              registrar datos personales en cualquier blockchain. La exigencia
+              normativa de que un cliente pueda exiguir el borrado de sus datos impide
+              entonces todo registro por la naturaleza de ésta tecnología.
             </p>
             <p className="col-lg-10 fs-4 text-white">
               El registro encriptado tampoco está permitido precisamente por su
               posible desencriptación. Por tanto, la única opción posible es el
               registro de datos en forma de hash, ya que es una encriptación
-              irreversible.
+              irreversible e indescifrable.
             </p>
             <p className="col-lg-10 fs-4 text-white">
               Solo el creador del hash conoce el origen de los datos hasheados,
-              que en éste caso será un notario que pretende verificar a quien lo
-              solicite la veracidad de un documento existente, representado en
-              la Blockchain con su único hash.
+              que en éste caso será un notario que dará fe con su registro de la existencia
+              del documento demandado para quien quiera saber de su existencia.
+              Evidentemente, la blockchain solo puede verificar la existencia de unos datos representados
+              por un hash. No podremos comprobar el contenido del mismo que seguirá siendo privado.
             </p>
           </div>
           <div className="col-md-10 mx-auto col-lg-5">

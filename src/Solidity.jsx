@@ -6,11 +6,12 @@ import Swal from "sweetalert2";
 
 const Solidity = () => {
   const [inputData, setInputData] = useState("");
+  const [inputSign, setInputSign] = useState("");
   const [accountNotarizer, setAccountNotarizer] = useState("");
   const [rootHook, setRootHook] = useState("");
   const [buyNFTOk, setBuyNFTOk] = useState(false);
   const [hashHook, setHashHook] = useState("");
-  const nftContract = "0x9DD80a68E1332Bd0cA7302785093AF11C065Aa27"; // bsc testnet 25/10/22
+  const nftContract = "0x3eD1a9B3ef6983694F670074Fa74D833D00e8c3C"; // bsc testnet 25/10/22
   const BINANCENETWORK = "bnbt";
   const [doubleCheck, setDoubleChek] = useState(false);
 
@@ -61,7 +62,7 @@ const Solidity = () => {
     }
   }
 
-  //captura la blockchain del usuario
+
   async function checkingNetwork(networkFromMetamask) {
     if (networkFromMetamask.name !== BINANCENETWORK) {
       Swal.fire({
@@ -88,7 +89,7 @@ const Solidity = () => {
     }
   }
 
-  // funcion que cambia hacia o instala la red en uso
+
   async function addNetwork() {
     let networkData = [
       {
@@ -161,6 +162,54 @@ const Solidity = () => {
     }
   }
 
+    async function notarizeWithSign() {
+      if (!doubleCheck) {
+        setDoubleChek(true);
+        const provider = new ethers.providers.Web3Provider(window.ethereum);
+        const networkFromMetamask = await provider.getNetwork();
+        if (!(await checkingNetwork(networkFromMetamask))) {
+          return;
+        }
+        const signer = provider.getSigner();
+        const contract = new ethers.Contract(nftContract, Notario.abi, signer);
+        try {
+          await contract.callStatic.notarizeWithSign(hashHook, inputSign);
+          const tx = await contract.notarizeWithSign(hashHook, inputSign);
+          Swal.fire({
+            title: "Procesando el registro de su documento",
+            text: "Espere, y no actualice la página",
+            // icon: 'info',
+            showConfirmButton: false,
+            imageUrl:
+              "https://thumbs.gfycat.com/ConventionalOblongFairybluebird-size_restricted.gif",
+            imageWidth: 100,
+            imageHeight: 100,
+            imageAlt: "Procesando su registro",
+          });
+          const Ok = await tx.wait();
+          if (Ok) {
+            Swal.fire({
+              title: `Se ha procesado el registro de su documento`,
+              html: `<a href="https://testnet.bscscan.com/tx/${tx.hash}" target="_blank" rel="noreferrer">Hash de la transacción</a>`,
+              icon: "success",
+              confirmButtonText: "Cerrar",
+            });
+            setDoubleChek(false);
+          }
+        } catch (err) {
+          let mensajeError = err.reason;
+          Swal.fire({
+            title: "Ooops!",
+            text: `${mensajeError}`,
+            icon: "error",
+            confirmButtonText: "Cerrar",
+          });
+          console.log("Error: ", err);
+          setDoubleChek(false);
+        }
+      }
+    }
+
   return (
     <div className="">
       <div className="bg-dark container col-xl-10 col-xxl-8 px-4 py-5">
@@ -190,6 +239,39 @@ const Solidity = () => {
               Finalmente registraremos el Hash con la cuenta que usted haya
               determinado que sea la notaria. Rechazará todo intento de registro
               por parte de cualquier otra cuenta.
+            </p>
+            <h2 className="display-4 fw-bold lh-1 mb-3 text-white">
+              La firma del notario
+            </h2>
+            <p className="col-lg-12 fs-4 text-white">
+              Se podría considerar que con la firma de la transacción de la cuenta considerada
+              notaria es suficiente. Y si, para mí es suficiente. Toda firma de
+              transacción con ésa cuenta nos valida el origen.
+            </p>
+            <p className="col-lg-12 fs-4 text-white">
+              Aun así, no tendría porque ser necesario un gasto de gas en éste
+              proceso. Es decir, al igual que un notario real dispone de su poder
+              mediante una firma en un documento, nosotros podemos emularlo con
+              una firma de un hash fuera de red.
+            </p>
+            <p className="col-lg-12 fs-4 text-white">
+              En el formulario "Registro con firma" usted podrá validar hashes
+              que haya firmado con la cuenta que haya introducido como notaria.
+              Seguidamente coja esa firma y con otra cuenta que llamaremos
+              administradora registre ése documento sin necesidad de que lo
+              realice la cuenta notaria. Tenga en cuenta que debe generar también
+              el mismo hash. En un caso real el notario enviaría la firma y el hash para 
+              que lo registrase su empleado y desconociese así el origen de los datos. 
+            </p>
+            <p className="col-lg-12 fs-4 text-white">
+              Si no sabe como firmar con su metamask acuda al README.md de mi
+              repositorio y le indicaré una forma fácil.
+            </p>
+            <p className="col-lg-12 fs-4 text-white">
+              Para finalizar éste tutorial, acuda a la daap del etherscan de mi contrato 
+              verificado para que pueda hacer todas las comprobaciones de los getters establecidos. 
+              Podrá conmprobar si un hash está firmado, con que cuenta notaria se ha hecho,
+              el tiempo de registro, etcetera. 
             </p>
           </div>
           <div className="col-md-10 mx-auto col-lg-5">
@@ -252,6 +334,28 @@ const Solidity = () => {
                 type="button"
               >
                 Registrar Hash
+              </button>
+              <hr className="my-4" />
+            </form>
+            <form className="my-4 p-4 p-md-5 border rounded-3 bg-light">
+              <h2>Registro con firma</h2>
+              <div className="form-floating mb-3">
+                <input
+                  onChange={(e) => setInputSign(e.target.value)}
+                  type="text"
+                  className="form-control"
+                  id="firma"
+                />
+                <label htmlFor="firma">Recuerde haber generado el hash correcto en el anterior formulario</label>
+              </div>
+              <hr className="my-4" />
+              <button
+                id="btn-buy-nft"
+                onClick={() => notarizeWithSign()}
+                className="w-100 btn btn-lg btn-warning"
+                type="button"
+              >
+                Registrar Hash con firma
               </button>
               <hr className="my-4" />
             </form>
