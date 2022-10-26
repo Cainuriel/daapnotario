@@ -17,10 +17,10 @@ const Solidity = () => {
   const [doubleCheck, setDoubleChek] = useState(false);
 
   async function setDataToHash() {
-
-      const hashFromEthers = await ethers.utils.keccak256(ethers.utils.toUtf8Bytes("hello world"))
-        setHashHook(hashFromEthers);
-
+    const hashFromEthers = await ethers.utils.keccak256(
+      ethers.utils.toUtf8Bytes("hello world")
+    );
+    setHashHook(hashFromEthers);
   }
 
   async function setNotarizer() {
@@ -63,10 +63,65 @@ const Solidity = () => {
     }
   }
 
+  //captura la blockchain del usuario
+  async function checkingNetwork(networkFromMetamask) {
+    if (networkFromMetamask.name !== BINANCENETWORK) {
+      Swal.fire({
+        title: "¡Cuidado!",
+        text: "Estás en la red " + networkFromMetamask.name,
+        showCancelButton: true,
+        confirmButtonText: "Cambiate o instalate " + BINANCENETWORK,
+        imageUrl:
+          "https://img.capital.com/imgs/articles/1200x627x1/shutterstock_2007471221_2.png",
+        imageWidth: 300,
+
+        imageAlt: "Network BSC",
+      }).then((result) => {
+        /* Read more about isConfirmed, isDenied below */
+        if (result.isConfirmed) {
+          addNetwork();
+          return false;
+        } else {
+          window.location.reload();
+        }
+      });
+    } else {
+      return true;
+    }
+  }
+
+  // funcion que cambia hacia o instala la red en uso
+  async function addNetwork() {
+    let networkData = [
+      {
+        chainId: "0x61",
+        chainName: "BSCTESTNET",
+        rpcUrls: ["https://data-seed-prebsc-1-s1.binance.org:8545"],
+        nativeCurrency: {
+          name: "BINANCE COIN",
+          symbol: "BNB",
+          decimals: 18,
+        },
+        blockExplorerUrls: ["https://testnet.bscscan.com/"],
+      },
+    ];
+
+    // agregar red o cambiar red
+    return window.ethereum.request({
+      method: "wallet_addEthereumChain",
+      params: networkData,
+    });
+  }
+
   async function notarizeWithoutSign() {
+    
     if (!doubleCheck) {
       setDoubleChek(true);
       const provider = new ethers.providers.Web3Provider(window.ethereum);
+      const networkFromMetamask = await provider.getNetwork();
+      if (! await checkingNetwork(networkFromMetamask)) {
+        return;
+      }
       const signer = provider.getSigner();
       const contract = new ethers.Contract(nftContract, Notario.abi, signer);
       console.log("el hook hash ", hashHook);
