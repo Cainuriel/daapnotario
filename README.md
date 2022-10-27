@@ -23,11 +23,7 @@ Una forma rápida de firmar hashes con su cuenta en metamask es la siguiente:
 
 ![metamask](/assets/metamask.png)
 
-6. Se levantará su metamask para que firme sin coste alguno de gas. Es una operación offchain
-
-![metamask](/assets/metamask.png)
-
-7. Finalmente, tendrá la firma realizada. Cópiela y llévala al campo correspondiente de registro.
+6. Finalmente, tendrá la firma realizada. Cópiela y llévela al campo correspondiente de registro.
 
 ![metamask](/assets/signedmessage.png)
 
