@@ -8,6 +8,7 @@ Una forma rápida de firmar hashes con su cuenta en metamask es la siguiente:
 
 1. Dirigase a  [Remix IDE](https://remix.ethereum.org/)
 2. Conecte la metamask a la plataforma
+
 ![Seleccionar proveedor](/assets/conectar.png)
 3. Al lado de su cuenta conectada aparece un icono con un lapiz. Es para firmar.
 ![icono lapiz](/assets/lapicero.png)
