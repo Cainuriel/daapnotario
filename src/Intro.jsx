@@ -109,7 +109,7 @@ const Intro = () => {
               lang="logo de notarios de españa"
             >
               <img
-                src="./assets/dibujo.jpg"
+                src="./dibujo.jpg"
                 width="300"
                 alt="logo de notarios de españa"
               />

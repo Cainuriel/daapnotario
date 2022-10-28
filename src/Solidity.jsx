@@ -11,7 +11,7 @@ const Solidity = () => {
   const [rootHook, setRootHook] = useState("");
   const [buyNFTOk, setBuyNFTOk] = useState(false);
   const [hashHook, setHashHook] = useState("");
-  const nftContract = "0x3eD1a9B3ef6983694F670074Fa74D833D00e8c3C"; // bsc testnet 25/10/22
+  const nftContract = "0x52a485b2888fD9bb22a454A25130Da103F0E0a43"; // bsc testnet 25/10/22
   const BINANCENETWORK = "bnbt";
   const [doubleCheck, setDoubleChek] = useState(false);
 
@@ -244,34 +244,50 @@ const Solidity = () => {
               La firma del notario
             </h2>
             <p className="col-lg-12 fs-4 text-white">
-              Se podría considerar que con la firma de la transacción de la cuenta considerada
-              notaria es suficiente. Y si, para mí es suficiente. Toda firma de
-              transacción con ésa cuenta nos valida el origen.
+              Se podría considerar que con la firma de la transacción de la
+              cuenta considerada notaria es suficiente. Y si, para mí es
+              suficiente. Toda firma de transacción con ésa cuenta nos valida el
+              origen.
             </p>
             <p className="col-lg-12 fs-4 text-white">
               Aun así, no tendría porque ser necesario un gasto de gas en éste
-              proceso. Es decir, al igual que un notario real dispone de su poder
-              mediante una firma en un documento, nosotros podemos emularlo con
-              una firma de un hash fuera de red.
+              proceso. Es decir, al igual que un notario real dispone de su
+              poder mediante una firma en un documento, nosotros podemos
+              emularlo con una firma de un hash fuera de red.
             </p>
             <p className="col-lg-12 fs-4 text-white">
               En el formulario "Registro con firma" usted podrá validar hashes
               que haya firmado con la cuenta que haya introducido como notaria.
               Seguidamente coja esa firma y con otra cuenta que llamaremos
               administradora registre ése documento sin necesidad de que lo
-              realice la cuenta notaria. Tenga en cuenta que debe generar también
-              el mismo hash. En un caso real el notario enviaría la firma y el hash para 
-              que lo registrase su empleado y desconociese así el origen de los datos. 
+              realice la cuenta notaria. Tenga en cuenta que debe generar
+              también el mismo hash. En un caso real el notario enviaría la
+              firma y el hash para que lo registrase su empleado y desconociese
+              así el origen de los datos.
             </p>
             <p className="col-lg-12 fs-4 text-white">
-              Si no sabe como firmar con su metamask acuda al README.md de mi
-              repositorio y le indicaré una forma fácil.
+              Si no sabe como firmar con su metamask{" "}
+              <a
+                href="https://github.com/Cainuriel/daapnotario/blob/main/README.md"
+                target="_blank"
+                rel="noreferrer"
+              >
+                acuda al README.md
+              </a>{" "}
+              de mi repositorio y le indicaré una forma fácil.
             </p>
             <p className="col-lg-12 fs-4 text-white">
-              Para finalizar éste tutorial, acuda a la daap del etherscan de mi contrato 
-              verificado para que pueda hacer todas las comprobaciones de los getters establecidos. 
-              Podrá conmprobar si un hash está firmado, con que cuenta notaria se ha hecho,
-              el tiempo de registro, etcetera. 
+              Para finalizar éste tutorial,{" "}
+              <a
+                href="https://testnet.bscscan.com/address/0x52a485b2888fd9bb22a454a25130da103f0e0a43#readContract"
+                target="_blank"
+                rel="noreferrer"
+              >
+                acuda a la daap del etherscan de mi contrato verificado
+              </a>{" "}
+              para que pueda hacer todas las comprobaciones de los getters
+              establecidos. Podrá conmprobar si un hash está firmado, con que
+              cuenta notaria se ha hecho, el tiempo de registro, etcetera.
             </p>
           </div>
           <div className="col-md-10 mx-auto col-lg-5">
@@ -346,7 +362,10 @@ const Solidity = () => {
                   className="form-control"
                   id="firma"
                 />
-                <label htmlFor="firma">Recuerde haber generado el hash correcto en el anterior formulario</label>
+                <label htmlFor="firma">
+                  Recuerde haber generado el hash correcto en el anterior
+                  formulario
+                </label>
               </div>
               <hr className="my-4" />
               <button
