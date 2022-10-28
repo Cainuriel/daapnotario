@@ -104,7 +104,7 @@ const Intro = () => {
           </div>
           <div className="col-md-10 mx-auto col-lg-5">
             <a
-              href="./assets/dibujo.jpg"
+              href="./dibujo.jpg"
               target={"_blank"}
               lang="logo de notarios de españa"
             >
