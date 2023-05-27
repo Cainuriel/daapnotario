@@ -224,7 +224,7 @@ const Solidity = () => {
               para todo el mundo.
             </p>
             <p className="col-lg-12 fs-4 text-white">
-              Se comprenderá que esto no ha de ser así en otro tipo de daap.
+              Se comprenderá que esto no ha de ser así en otro tipo de Dapp.
             </p>
             <p className="col-lg-12 fs-4 text-white">
               Introduzca en el formulario "Registo de Notario" la cuenta que
