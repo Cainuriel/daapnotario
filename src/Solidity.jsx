@@ -233,7 +233,8 @@ const Solidity = () => {
             <p className="col-lg-12 fs-4 text-white">
               A continuación simule el registro de un documento introduciendo
               cualquier dato para que sea hasheado. Su resultado aparecerá en el
-              campo inferior del botón "Crear Hash".
+              campo inferior del botón "Crear Hash". Ésta acción no consume gas y 
+              no necesita ser firmada por ninguna cuenta.
             </p>
             <p className="col-lg-12 fs-4 text-white">
               Finalmente registraremos el Hash con la cuenta que usted haya
