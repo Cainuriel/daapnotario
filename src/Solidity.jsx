@@ -258,13 +258,14 @@ const Solidity = () => {
             <p className="col-lg-12 fs-4 text-white">
               En el formulario "Registro con firma" usted podrá validar hashes
               que haya firmado con la cuenta que haya introducido como notaria.
-              Seguidamente coja esa firma y con otra cuenta que llamaremos
-              administradora registre ése documento sin necesidad de que lo
-              realice la cuenta notaria. Tenga en cuenta que debe generar
-              también el mismo hash. En un caso real el notario enviaría la
-              firma y el hash para que lo registrase su empleado y desconociese
-              así el origen de los datos.
-            </p>
+              Seguidamente coja esa firma y <strong style={{color: "orange"}}>con otra cuenta que podemos llamar
+              administradora</strong>  registre ése hash <strong style={{color: "orange"}}>sin necesidad de que lo
+              realice la cuenta notaria.</strong></p> 
+              <p className="col-lg-12 fs-4 text-white">            
+               ¿No le parece fantástico?
+              En un caso real el notario le enviaría a la cuenta administradora la firma y el hash para que lo registrase sin que el 
+              el empleado, la cuenta administradora, conociese el origen de los datos que han generado el hash.
+              </p>
             <p className="col-lg-12 fs-4 text-white">
               Si no sabe como firmar con su metamask{" "}
               <a
@@ -285,8 +286,8 @@ const Solidity = () => {
               >
                 acuda a la dapp del etherscan de mi contrato verificado
               </a>{" "}
-              para que pueda hacer todas las comprobaciones de los getters
-              establecidos. Podrá conmprobar si un hash está firmado, con que
+              para que pueda hacer todas las comprobaciones que considere. 
+              Podrá conmprobar si un hash está firmado, con que
               cuenta notaria se ha hecho, el tiempo de registro, etcetera.
             </p>
           </div>
