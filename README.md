@@ -1,5 +1,5 @@
 # Dappnotario
- daap de registro notarial de hashes
+ dapp de registro notarial de hashes
 
 ## Hecho con VITE y REACT
 

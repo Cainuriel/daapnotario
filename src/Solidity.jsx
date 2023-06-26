@@ -283,7 +283,7 @@ const Solidity = () => {
                 target="_blank"
                 rel="noreferrer"
               >
-                acuda a la daap del etherscan de mi contrato verificado
+                acuda a la dapp del etherscan de mi contrato verificado
               </a>{" "}
               para que pueda hacer todas las comprobaciones de los getters
               establecidos. Podrá conmprobar si un hash está firmado, con que

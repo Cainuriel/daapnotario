@@ -49,7 +49,7 @@ const Intro = () => {
 
   function faucet() {
     window.open(
-      "https://testnet.binance.org/faucet-smart",
+      "https://discord.gg/bnbchain",
       "_blank",
       'rel="noreferrer"'
     );
@@ -129,9 +129,8 @@ const Intro = () => {
               mala práctica. Téngalo en cuenta a la hora de crear la suya.{" "}
             </p>
             <p className="col-lg-10 fs-4 text-white">
-              Si no tiene BNBs de prueba para hacer el tutorial apriete el botón
-              azul para poder reclamar tokens y así poder pagar las
-              transacciones.
+              Si no tiene BNBs tendrá que acudir al discord de Binance para reclamar
+              algunos tokens. Apriete el botón azul para ir a el. 
             </p>
           </div>
           <div className="col-md-10 mx-auto col-lg-5">
@@ -149,7 +148,7 @@ const Intro = () => {
               className="w-100 btn btn-lg btn-primary"
               type="button"
             >
-              Faucet de Binance
+              Discord de Binance
             </button>
             <hr className="my-4" />
             <form className="p-4 p-md-5 border rounded-3 bg-light">
