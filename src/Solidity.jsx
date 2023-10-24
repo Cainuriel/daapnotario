@@ -290,7 +290,7 @@ const Solidity = () => {
               para que pueda hacer todas las comprobaciones que considere. 
               Podrá conmprobar si un hash está firmado, con que
               cuenta notaria se ha hecho, el tiempo de registro, etcetera.
-              Último consejo: <strong>Conecte su metamask al scanner para realizar las comprobaciones.</strong>
+              Último consejo: <strong>Conecte su metamask al scanner para realizar las comprobaciones. </strong>
               Aunque los getters no consumen gas puede que le devuelva un error la aplicación por no haberse conectado.
             </p>
           </div>
