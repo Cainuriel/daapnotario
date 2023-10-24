@@ -36,7 +36,7 @@ const Solidity = () => {
         // icon: 'info',
         showConfirmButton: false,
         imageUrl:
-          "https://thumbs.gfycat.com/ConventionalOblongFairybluebird-size_restricted.gif",
+          "./processing.gif",
         imageWidth: 100,
         imageHeight: 100,
         imageAlt: "Procesando su registro",
@@ -71,7 +71,7 @@ const Solidity = () => {
         showCancelButton: true,
         confirmButtonText: "Cambiate o instalate " + BINANCENETWORK,
         imageUrl:
-          "https://img.capital.com/imgs/articles/1200x627x1/shutterstock_2007471221_2.png",
+        "./processing.gif",
         imageWidth: 300,
 
         imageAlt: "Network BSC",
@@ -133,7 +133,7 @@ const Solidity = () => {
           // icon: 'info',
           showConfirmButton: false,
           imageUrl:
-            "https://thumbs.gfycat.com/ConventionalOblongFairybluebird-size_restricted.gif",
+          "./processing.gif",
           imageWidth: 100,
           imageHeight: 100,
           imageAlt: "Procesando su registro",
@@ -181,7 +181,7 @@ const Solidity = () => {
             // icon: 'info',
             showConfirmButton: false,
             imageUrl:
-              "https://thumbs.gfycat.com/ConventionalOblongFairybluebird-size_restricted.gif",
+            "./processing.gif",
             imageWidth: 100,
             imageHeight: 100,
             imageAlt: "Procesando su registro",
@@ -290,6 +290,8 @@ const Solidity = () => {
               para que pueda hacer todas las comprobaciones que considere. 
               Podrá conmprobar si un hash está firmado, con que
               cuenta notaria se ha hecho, el tiempo de registro, etcetera.
+              Último consejo: <strong>Conecte su metamask al scanner para realizar las comprobaciones.</strong>
+              Aunque los getters no consumen gas puede que le devuelva un error la aplicación por no haberse conectado.
             </p>
           </div>
           <div className="col-md-10 mx-auto col-lg-5">
