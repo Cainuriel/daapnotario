@@ -23,6 +23,6 @@
     "@vitejs/plugin-react": "^2.1.0",
     "dotenv": "^16.0.3",
     "hardhat": "^2.12.0",
-    "vite": "^3.1.0"
+    "vite": "^3.2.8"
   }
 }
