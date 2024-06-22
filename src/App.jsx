@@ -31,7 +31,7 @@ function App() {
           className="text-center p-3 container"
           style={{ backgroundColor: "rgba(0, 0, 0, 0.2)" }}
         >
-          2022{" "}
+          2024{" "}
           <a
             className="text-white text-decoration-none"
             href="https://cainuriel.github.io/"
