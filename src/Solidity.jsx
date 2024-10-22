@@ -7,6 +7,7 @@ import Swal from "sweetalert2";
 const Solidity = () => {
   const [inputData, setInputData] = useState("");
   const [inputSign, setInputSign] = useState("");
+  const [sign, setSign] = useState("");
   const [accountNotarizer, setAccountNotarizer] = useState("");
   const [rootHook, setRootHook] = useState("");
   const [buyNFTOk, setBuyNFTOk] = useState(false);
@@ -14,21 +15,21 @@ const Solidity = () => {
   const nftContract = "0x52a485b2888fD9bb22a454A25130Da103F0E0a43"; // bsc testnet 25/10/22
   const BINANCENETWORK = "bnbt";
   const [doubleCheck, setDoubleChek] = useState(false);
-
+  const provider = new ethers.BrowserProvider(window.ethereum);
+  
   async function setDataToHash() {
-    const hashFromEthers = await ethers.utils.keccak256(
-      ethers.utils.toUtf8Bytes(inputData)
-    );
+    const hashFromEthers = ethers.keccak256(ethers.toUtf8Bytes(inputData));
     setHashHook(hashFromEthers);
   }
 
   async function setNotarizer() {
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
-    const signer = provider.getSigner();
+    
+    const signer = await provider.getSigner();
     const contract = new ethers.Contract(nftContract, Notario.abi, signer);
 
+    
     try {
-      await contract.callStatic.setNotarizedAddress(accountNotarizer);
+      await contract.setNotarizedAddress.staticCall(accountNotarizer);
       const tx = await contract.setNotarizedAddress(accountNotarizer);
       Swal.fire({
         title: "Procesando el registro de su cuenta Notario",
@@ -62,70 +63,96 @@ const Solidity = () => {
     }
   }
 
+  async function signHash() {
 
-  async function checkingNetwork(networkFromMetamask) {
-    if (networkFromMetamask.name !== BINANCENETWORK) {
-      Swal.fire({
-        title: "¡Cuidado!",
-        text: "Estás en la red " + networkFromMetamask.name,
-        showCancelButton: true,
-        confirmButtonText: "Cambiate o instalate " + BINANCENETWORK,
-        imageUrl:
-        "./processing.gif",
-        imageWidth: 300,
-
-        imageAlt: "Network BSC",
-      }).then((result) => {
-        /* Read more about isConfirmed, isDenied below */
-        if (result.isConfirmed) {
-          addNetwork();
-          return false;
-        } else {
-          window.location.reload();
-        }
-      });
-    } else {
-      return true;
-    }
+      try {
+        // Solicitar acceso a MetaMask
+        // await window.ethereum.request({ method: "eth_requestAccounts" });
+  
+  
+        // Obtener la cuenta del usuario
+        const signer = await provider.getSigner();
+        const address = await signer.getAddress();
+  
+        // Firmar el hash
+        const signature = await signer.signMessage(inputData);
+  
+        console.log("La dirección: ", address);
+        console.log("Ha firmado: ", inputData);
+        console.log("La firma resultante es:", signature);
+  
+        setSign(signature);
+      } catch (error) {
+        console.error("Error al firmar el hash:", error);
+        throw error;
+      }
+ 
   }
 
 
-  async function addNetwork() {
-    let networkData = [
-      {
-        chainId: "0x61",
-        chainName: "BSCTESTNET",
-        rpcUrls: ["https://data-seed-prebsc-1-s1.binance.org:8545"],
-        nativeCurrency: {
-          name: "BINANCE COIN",
-          symbol: "BNB",
-          decimals: 18,
-        },
-        blockExplorerUrls: ["https://testnet.bscscan.com/"],
-      },
-    ];
+  // async function checkingNetwork(networkFromMetamask) {
+  //   if (networkFromMetamask.name !== BINANCENETWORK) {
+  //     Swal.fire({
+  //       title: "¡Cuidado!",
+  //       text: "Estás en la red " + networkFromMetamask.name,
+  //       showCancelButton: true,
+  //       confirmButtonText: "Cambiate o instalate " + BINANCENETWORK,
+  //       imageUrl:
+  //       "./processing.gif",
+  //       imageWidth: 300,
 
-    // agregar red o cambiar red
-    return window.ethereum.request({
-      method: "wallet_addEthereumChain",
-      params: networkData,
-    });
-  }
+  //       imageAlt: "Network BSC",
+  //     }).then((result) => {
+  //       /* Read more about isConfirmed, isDenied below */
+  //       if (result.isConfirmed) {
+  //         addNetwork();
+  //         return false;
+  //       } else {
+  //         window.location.reload();
+  //       }
+  //     });
+  //   } else {
+  //     return true;
+  //   }
+  // }
+
+
+  // async function addNetwork() {
+  //   let networkData = [
+  //     {
+  //       chainId: "0x61",
+  //       chainName: "BSCTESTNET",
+  //       rpcUrls: ["https://data-seed-prebsc-1-s1.binance.org:8545"],
+  //       nativeCurrency: {
+  //         name: "BINANCE COIN",
+  //         symbol: "BNB",
+  //         decimals: 18,
+  //       },
+  //       blockExplorerUrls: ["https://testnet.bscscan.com/"],
+  //     },
+  //   ];
+
+  //   // agregar red o cambiar red
+  //   return window.ethereum.request({
+  //     method: "wallet_addEthereumChain",
+  //     params: networkData,
+  //   });
+  // }
 
   async function notarizeWithoutSign() {
     
     if (!doubleCheck) {
       setDoubleChek(true);
-      const provider = new ethers.providers.Web3Provider(window.ethereum);
-      const networkFromMetamask = await provider.getNetwork();
-      if (! await checkingNetwork(networkFromMetamask)) {
-        return;
-      }
-      const signer = provider.getSigner();
+ 
+      // const networkFromMetamask = await provider.getNetwork();
+      // if (! await checkingNetwork(networkFromMetamask)) {
+      //   return;
+      // }
+      const signer = await provider.getSigner();
       const contract = new ethers.Contract(nftContract, Notario.abi, signer);
       console.log("el hook hash ", hashHook);
       try {
-        await contract.callStatic.notarizeWithoutSign(hashHook);
+        await contract.notarizeWithoutSign.staticCall(hashHook);
         const tx = await contract.notarizeWithoutSign(hashHook);
         Swal.fire({
           title: "Procesando el registro de su documento",
@@ -165,15 +192,16 @@ const Solidity = () => {
     async function notarizeWithSign() {
       if (!doubleCheck) {
         setDoubleChek(true);
-        const provider = new ethers.providers.Web3Provider(window.ethereum);
-        const networkFromMetamask = await provider.getNetwork();
-        if (!(await checkingNetwork(networkFromMetamask))) {
-          return;
-        }
-        const signer = provider.getSigner();
+
+        // const networkFromMetamask = await provider.getNetwork();
+        // if (!(await checkingNetwork(networkFromMetamask))) {
+        //   return;
+        // }
+        const signer = await provider.getSigner();
         const contract = new ethers.Contract(nftContract, Notario.abi, signer);
+        console.log("el hash ", hashHook, "la firma ", inputSign);
         try {
-          await contract.callStatic.notarizeWithSign(hashHook, inputSign);
+          await contract.notarizeWithSign.staticCall(hashHook, inputSign);
           const tx = await contract.notarizeWithSign(hashHook, inputSign);
           Swal.fire({
             title: "Procesando el registro de su documento",
@@ -357,6 +385,37 @@ const Solidity = () => {
               </button>
               <hr className="my-4" />
             </form>
+            <div style={{ height: "100px" }}></div>
+            <form className="p-4 p-md-5 border rounded-3 bg-light">
+              <h2>Firmar como Notario</h2>
+              <div className="form-floating mb-3">
+                <input
+                  onChange={(e) => setInputData(e.target.value)}
+                  type="text"
+                  className="form-control"
+                  id="inputData2"
+                />
+                <label htmlFor="inputData2">Hash</label>
+                <button
+                  id="dataToHashButton"
+                  onClick={() => signHash()}
+                  className="btn-success w-100 btn btn-lg"
+                  type="button"
+                >
+                  Firmar
+                </button>
+                <hr className="my-4" />
+                <input
+                  value={sign}
+                  readOnly
+                  type="text"
+                  className="form-control"
+                  id="hash"
+                />
+              </div>
+
+              <hr className="my-4" />
+            </form>
             <form className="my-4 p-4 p-md-5 border rounded-3 bg-light">
               <h2>Registro con firma</h2>
               <div className="form-floating mb-3">
@@ -367,8 +426,7 @@ const Solidity = () => {
                   id="firma"
                 />
                 <label htmlFor="firma">
-                  Recuerde haber generado el hash correcto en el anterior
-                  formulario
+                 firma
                 </label>
               </div>
               <hr className="my-4" />

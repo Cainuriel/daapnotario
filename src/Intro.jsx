@@ -9,6 +9,7 @@ const Intro = () => {
 
   async function init() {
     if (typeof window.ethereum !== "undefined") {
+      await switchNetwork();
       const accounts = await window.ethereum.request({
         method: "eth_requestAccounts",
       });
@@ -35,6 +36,29 @@ const Intro = () => {
           );
         }
       });
+    }
+  }
+
+  async function switchNetwork() {
+    try {
+      await window.ethereum.request({
+        method: "wallet_addEthereumChain",
+        params: [
+          {
+            chainId: "0x61", // Chain ID de Binance Smart Chain Testnet
+            chainName: "Binance Smart Chain Testnet",
+            nativeCurrency: {
+              name: "Binance Coin",
+              symbol: "tBNB",
+              decimals: 18,
+            },
+            rpcUrls: ["https://data-seed-prebsc-1-s1.bnbchain.org:8545"],
+            blockExplorerUrls: ["https://testnet.bscscan.com"],
+          },
+        ],
+      });
+    } catch (error) {
+      console.error("Error al cambiar de red:", error);
     }
   }
 
