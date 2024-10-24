@@ -6,15 +6,20 @@ contract Notario  {
   mapping (bytes32 => address) public records;
   mapping (bytes32 => uint256) public timestamps;
 
-  address notarizedAddress = 0x5B38Da6a701c568545dCfcB03FcB875f56beddC4;
+  address public notarizedAddress;
 
   event LogNotarized(bytes32 indexed record, address indexed notarizer, uint256 timestamp);
+
+  constructor() {
+
+    notarizedAddress = msg.sender;
+  }
 
   function notarizeWithSign(bytes32 hash, bytes memory sig) public {
     require(hash != keccak256(abi.encodePacked("")), "hash vacio");
     require(records[hash] == address(0), "Documento ya notariado");
     require(notarizedAddress == msg.sender, "Usted no es el notario");
-    require(notarizedAddress == recoverSigner(prefixed(hash), sig), "Documento no firmado por el notario");
+    require(notarizedAddress == recoverSigner(hash, sig), "Documento no firmado por el notario");
     records[hash] = msg.sender;
     timestamps[hash] = block.timestamp;
 

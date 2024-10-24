@@ -1,8 +1,4 @@
-{
-  "_format": "hh-sol-artifact-1",
-  "contractName": "Notario",
-  "sourceName": "contracts/Notario.sol",
-  "abi": [
+[
 	{
 		"anonymous": false,
 		"inputs": [
@@ -168,4 +164,3 @@
 		"type": "function"
 	}
 ]
-}
