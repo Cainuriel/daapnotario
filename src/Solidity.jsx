@@ -87,21 +87,21 @@ const Solidity = () => {
       });
 
         // Verificar la firma (obtener la dirección del firmante) sobre el string original
-        const recoveredAddress = ethers.verifyMessage(hashHook, signature);
+        // const recoveredAddress = ethers.verifyMessage(hashHook, signature);
 
-        console.log("La dirección: ", address);
-        // console.log("Ha firmado el inputData: ", inputData);
-        console.log("Hash generado para enviar al contrato: ", hashHook);
-        console.log("La firma resultante es:", signature);
-        console.log("La dirección recuperada de la firma es:", recoveredAddress);
+        // console.log("La dirección: ", address);
+        // // console.log("Ha firmado el inputData: ", inputData);
+        // console.log("Hash generado para enviar al contrato: ", hashHook);
+        // console.log("La firma resultante es:", signature);
+        // console.log("La dirección recuperada de la firma es:", recoveredAddress);
 
         // Comparar la dirección recuperada con la dirección original
-        if (recoveredAddress.toLowerCase() === address.toLowerCase()) {
-            console.log("La firma es válida y la dirección coincide.");
-        } else {
-            console.log("La firma no es válida o la dirección no coincide.");
+        // if (recoveredAddress.toLowerCase() === address.toLowerCase()) {
+        //     console.log("La firma es válida y la dirección coincide.");
+        // } else {
+        //     console.log("La firma no es válida o la dirección no coincide.");
             
-        }
+        // }
   
         setInputSign(signature);
       } catch (error) {
