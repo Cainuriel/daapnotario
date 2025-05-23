@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, use } from 'react';
 import { ethers } from 'ethers';
 import styled from 'styled-components';
 import Button from './ui/Button';
@@ -200,21 +200,23 @@ const HashDisplay = styled.div`
   text-align: center;
 `;
 
-const MotionHashDisplay = motion(HashDisplay);
-const MotionErrorMessage = motion(ErrorMessage);
-
 const ErrorMessage = styled(HashDisplay)`
   background-color: #ffdddd;
   color: #d8000c;
   font-family: 'Arial', sans-serif;
 `;
 
+const MotionHashDisplay = motion(HashDisplay);
+const MotionErrorMessage = motion(ErrorMessage);
+
+
+
 const StyledInput = styled(Input)`
   width: 80%; /* Make input take more width within the card */
 `;
 
 const CreateHash = () => {
-  const [data, setData] = useState('');
+  const [data, setData] = useState('hola amigo');
   const [generatedHash, setGeneratedHash] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
@@ -251,6 +253,7 @@ const CreateHash = () => {
   }, []);
 
   const handleInputChange = (e) => {
+    console.log("Input changed:", e.target.value);
     setData(e.target.value);
     setGeneratedHash(''); // Clear previous hash when input changes
     setError(''); // Clear previous error
@@ -261,17 +264,21 @@ const CreateHash = () => {
       setError('Please enter data to hash.');
       return;
     }
-    if (!contract) {
-      setError('Contract not initialized. Ensure MetaMask is connected or a fallback provider is available.');
-      setIsLoading(false);
-      return;
-    }
-
+    // if (!contract) {
+    //   setError('Contract not initialized. Ensure MetaMask is connected or a fallback provider is available.');
+    //   setIsLoading(false);
+    //   return;
+    // }
+    console.log("Creating hash for data:", data);
+    
     try {
       setError('');
       setIsLoading(true);
+      console.log("loading", isLoading);
+      
       // setGeneratedHash('Generating...'); // Replaced by isLoading
-      const hash = await contract.creationHash(data);
+      const hash = await ethers.keccak256(ethers.toUtf8Bytes(data));
+      console.log("Generated hash:", hash);
       setGeneratedHash(hash);
     } catch (err) {
       console.error("Error calling creationHash:", err);
@@ -279,8 +286,11 @@ const CreateHash = () => {
       setGeneratedHash('');
     } finally {
       setIsLoading(false);
+      console.log("loading", isLoading);
+      
     }
   };
+
 
   return (
     <Card>
@@ -291,7 +301,7 @@ const CreateHash = () => {
           onChange={handleInputChange}
           placeholder="Enter data string"
         />
-        <Button onClick={handleCreateHash} disabled={isLoading}>
+        <Button onClick={()=> handleCreateHash()} disabled={isLoading}>
           {isLoading ? <LoadingSpinner /> : 'Create Hash'}
         </Button>
         <AnimatePresence>
