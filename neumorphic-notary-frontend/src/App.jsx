@@ -1,14 +1,13 @@
-import React, { useState } from 'react';
-import WalletConnect from './components/WalletConnect';
-import Button from './components/ui/Button';
-import Input from './components/ui/Input';
-import Card from './components/ui/Card';
-import CreateHash from './components/CreateHash';
-import NotarizeHash from './components/NotarizeHash';
-import VerifyNotarization from './components/VerifyNotarization';
-import SetNotarizedAddress from './components/SetNotarizedAddress';
-import EventViewer from './components/EventViewer'; // Import the new component
+import React, { Suspense, lazy } from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
+import LoadingSpinner from './components/ui/LoadingSpinner';
+
+const WalletConnect = lazy(() => import('./components/WalletConnect'));
+const CreateHash = lazy(() => import('./components/CreateHash'));
+const NotarizeHash = lazy(() => import('./components/NotarizeHash'));
+const VerifyNotarization = lazy(() => import('./components/VerifyNotarization'));
+const SetNotarizedAddress = lazy(() => import('./components/SetNotarizedAddress'));
+const EventViewer = lazy(() => import('./components/EventViewer'));
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -47,33 +46,20 @@ const Title = styled.h1`
 `;
 
 function App() {
-  const [inputValue, setInputValue] = useState('');
-
-  const handleButtonClick = () => {
-    alert('Button clicked!');
-  };
-
-  const handleInputChange = (e) => {
-    setInputValue(e.target.value);
-  };
-
   return (
     <>
       <GlobalStyle />
       <AppContainer>
-        <Title>Neumorphic Notary DApp</Title>
-        
-        {/* WalletConnect is already a Card-like container */}
-        <WalletConnect /> 
+        <Title>Notary DApp</Title>
 
-        {/* Each main functional component is already a Card */}
-        <CreateHash />
-        <NotarizeHash />
-        <VerifyNotarization />
-        <SetNotarizedAddress />
-        <EventViewer />
-
-        {/* The UI Components Demo card is removed as per the plan */}
+        <Suspense fallback={<LoadingSpinner />}>
+          <WalletConnect />
+          <CreateHash />
+          <NotarizeHash />
+          <VerifyNotarization />
+          <SetNotarizedAddress />
+          <EventViewer />
+        </Suspense>
 
       </AppContainer>
     </>
